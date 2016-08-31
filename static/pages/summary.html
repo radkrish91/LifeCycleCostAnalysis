@@ -1,0 +1,169 @@
+<!-- This view is controlled by the summaryController (see controller.js file-->
+
+<script src="./static/js/materialize.js" type="text/javascript"></script>
+<script src="./static/js/myScript.js"></script>
+
+<!-- Container to hold the summary of inputs from the user-->
+<ui-breadcrumbs displayname-property="data.displayName" abstract-proxy-property="data.proxy" template-url="./static/directives/uiBreadcrumbs/uiBreadcrumbs.tpl.html" class="fillCrumb"></ui-breadcrumbs>
+
+<div class="inputSummary">
+<div class="container">
+	<div class="row">
+		 <form ng-submit="processForm(pInfo().analysis,pInfo().disc_rate, pInfo().trafficVolume, pInfo().noLanes, pInfo().length, pInfo().width, pInfo().truck, lccaData().servlife, lccaData().newservlife, lccaData().cmat_val, lccaData().nmat_val, lccaData().ccon_val, lccaData().ncon_val, lccaData().conv_depth, lccaData().new_depth, lccaData().conv_des, lccaData().new_des, lccaData().conv_key, lccaData().new_key, lccaData().conv_fun, lccaData().new_fun, lccaData().conv_ener, lccaData().conv_enerNew)">
+		  <div layout-gt-sm="column" layout="row" class="listdemoBasicUsage">
+		  <!-- Container for the summary of project information (hypothetical/real)-->
+		  <div flex-gt-sm="50" flex="">
+			<br><br>
+			<md-toolbar class="toolbarTheme" layout="row" class="md-hue-3">
+			  <div class="md-toolbar-tools">
+				<span>Hypothetical Scenario</span>
+			  </div>
+			</md-toolbar>
+
+			<md-content>
+			  <md-list flex="">
+				<md-subheader class="md-no-sticky">Click on the values to edit and hit enter once done with changes</md-subheader>
+				<!--md-list-item class="md-3-line" ng-repeat="item in todos" >
+				  <div class="md-list-item-text" layout="column">
+					<h3><b>{{ item.what }}</b></h3>
+					<div class="teal-text" compile="item.who"></div>
+					<md-divider></md-divider>
+				  </div>
+				</md-list-item-->
+					<table class="centered bordered responsive-table">
+						<thead>
+						  <tr>
+							  <th>Name</th>
+							  <th>Value</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr ng-repeat="item in projectInfo">
+							<td> {{ item.what }} </td>
+							<td><div class="teal-text" compile="item.who"></div></td>
+						  </tr>
+						</tbody>
+					</table>
+			  </md-list>
+			</md-content>
+			<br><br>
+		  </div>
+		  
+		  <md-divider></md-divider>
+		  <!-- Container for the summary of life cycle cost analysis tab-->
+		  <div flex-gt-sm="50" flex="">
+			
+			<md-toolbar class="toolbarTheme" layout="row" class="md-hue-3">
+			  <div class="md-toolbar-tools">
+				<span>Life Cycle Cost Analysis</span>
+			  </div>
+			</md-toolbar>
+			<md-content>
+				<md-list flex="">
+				<md-subheader class="md-no-sticky">Click on the values to edit and hit enter once done with changes</md-subheader>
+					<table class="centered bordered responsive-table">
+						<thead>
+						  <tr>
+							  <th data-field="id">Name</th>
+							  <th data-field="name">Conventional Material</th>
+							  <th data-field="price">New Material</th>
+						  </tr>
+						</thead>
+						
+						<tbody>
+						  <tr ng-repeat="item in lcca">
+							<td> {{ item.what }} </td>
+							<td><div class="teal-text" compile="item.conventional"></div></td>
+							<td><div class="teal-text" compile="item.newMat"></div></td>
+						  </tr>
+						</tbody>
+					</table>
+				</md-list>
+			</md-content>
+			<br><br>
+		  </div>
+		  
+		  <!-- Accordion data for the maintenance, repair and rehab activities-->
+		  <div flex-gt-sm="50" flex="">
+			<md-content id="dynamic-content" class="f-clear-padding">
+			  <div class="md-accordion" ng-repeat="data in accordianData">
+				<md-toolbar ng-init="data.expanded = false" ng-click="toggleView(accordianData, data, $index)">
+				<div class="md-toolbar-tools">
+				  <div ng-bind="data.heading"></div>
+				  <div flex=""></div>
+				  <div ng-class="{expandCollapse:true, active:data.expanded}"></div>
+				</div>
+				</md-toolbar>
+				<div style="overflow:scroll" ng-class="{dataContent:true, activeContent:data.expanded}">
+				  <table class="centered bordered responsive-table">
+						<thead>
+						  <tr>
+							<th>Material</th>
+							<th>Name of Activity</th>
+							<th>Schedule(in years)</th>
+							<th>Work Zone Duration(in days)</th>
+						  </tr>
+						</thead>
+						
+						<tbody>
+						  <tr>
+							<td> Conventional Material </td>
+							<td><div class="teal-text" compile="data.name"></div></td>
+							<td><div class="teal-text" compile="data.years"></div></td>
+							<td><div class="teal-text" compile="data.days"></div></td>
+						  </tr>
+						  <tr>
+							<td> New Material </td>
+							<td><div class="teal-text" compile="data.new_name"></div></td>
+							<td><div class="teal-text" compile="data.new_years"></div></td>
+							<td><div class="teal-text" compile="data.new_days"></div></td>
+						  </tr>
+						</tbody>
+				  </table>
+				</div>
+			  </div>
+			</md-content>
+			  <br><br>
+		  </div>
+		</div>
+
+		<div layout="row" layout-align="center center">
+			<button type="submit" id="submitForm" class="btn btn-success btn-lg btn-block">Calculate Cost<i class="material-icons right">send</i></button>
+		</div>
+		<br><br>
+		<div layout="row" ng-hide="showProgress">
+			<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+		</div>
+		</form>
+	</div>
+	
+	<!-- Slider to hold the output graphs-->
+	<div class="row" id="graphSlider" style="display:none;">
+		<div class="slider">
+			<ul class="slides">
+			  <li>
+				<div id="chart_div" style="height:100%;"></div>
+			  </li>
+			  <li>
+				<div id="piechart" style="height:100%;"></div>
+			  </li>
+			  <li>
+				<div id="piechart2" style="height:100%;"></div>
+			  </li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="row" id="outputButtons" style="display:none;">
+		<div align="center">
+			<a class="waves-effect waves-light btn white-text" target="_blank" href="./static/pages/graph.html">View Output Summary<i class="material-icons right">cloud</i></a>
+			<a class="waves-effect waves-light btn white-text" target="_blank" href="./static/pages/probabilisticOutput.html">View Probabilistic Graph<i class="material-icons right">cloud</i></a>
+		</div>
+	</div>
+	<br>
+</div>
+</div>
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->

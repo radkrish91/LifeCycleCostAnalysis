@@ -1,0 +1,208 @@
+<!-- This view is controlled by the hypoController (see controller.js file-->
+
+<script src="./static/js/myScript.js"></script>
+
+<ui-breadcrumbs displayname-property="data.displayName" abstract-proxy-property="data.proxy" template-url="./static/directives/uiBreadcrumbs/uiBreadcrumbs.tpl.html" class="fillCrumb"></ui-breadcrumbs>
+
+<!-- Container to hold the values for hypothetical scenario, with default values-->
+<div class="container">
+	<div class="row">
+		<form name="hypoForm" class="col s6 z-depth-0">
+		  <div class="row">
+			<div class="col s6 offset-s9">
+				<input name="group1" type="radio" id="bridge" />
+				<label for="bridge">Bridge</label>
+			</div>
+		  </div>
+		  <div class="row">
+			<div class="col s6 offset-s9">
+				<input name="group1" type="radio" id="pavement" />
+				<label for="pavement">Pavement</label>
+			</div>
+		  </div>
+		  <div class="section">
+			  <div class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Analysis Period</label>
+				  <input required="" name="analysisHypo" step="any" type="number" ng-model="hypoData.analysis">
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 The analysis period is the period of time during which the initial and any future costs for the project alternatives will be evaluated
+				  </md-tooltip>
+				 </md-input-container>
+			  </div>
+			  <div ng-switch on="typeOfApproach.type">
+			  <div ng-switch-when="Probabilistic" class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Discount rate</label>
+				  <md-select required="" ng-model="typeOfDis" ng-change="showTypeOfDistribution($event,typeOfDis)">
+					  <md-option ng-repeat="dis in typeOfDistribution" value="{{dis.name}}">
+						{{dis.name}}
+					  </md-option>
+				  </md-select>
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 OMB Circular A-4 recommends using both 3% and 7% real rates.
+				  </md-tooltip>
+				</md-input-container>
+				<br><br>
+			   </div>
+			   <div ng-switch-when="Deterministic" class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Discount rate</label>
+				  <input required="" name="disc_rateHypo" step="any" type="number" ng-model="hypoData.disc_rate" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 OMB Circular A-4 recommends using both 3% and 7% real rates.
+				  </md-tooltip>
+				  <div ng-messages="hypoForm.disc_rateHypo.$error" multiple="" ng-if="hypoForm.disc_rateHypo.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+				</div>
+			  </div>
+			  <div class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Traffic Volume</label>
+				  <input required="" name="trafficVolumehypo" step="any" type="number" ng-model="hypoData.trafficVolume">
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 Volume of traffic expecte to flow
+				  </md-tooltip>
+				</md-input-container>
+			  </div>
+			  <div class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Number Of Lanes</label>
+				  <input required="" name="noLaneshhypo" step="any" type="number" ng-model="hypoData.noLanes">
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 Number of Lanes in each direction
+				  </md-tooltip>
+				</md-input-container>
+			  </div>
+			  <div class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Length Of Structure</label>
+				  <input required="" name="lengthhypo" step="any" type="number" ng-model="hypoData.length">
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 Length of the bridge
+				  </md-tooltip>
+				</md-input-container>
+			  </div>
+			  <div class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Width Of Structure</label>
+				  <input required="" name="widthhypo" step="any" type="number" ng-model="hypoData.width">
+				  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+				  <md-tooltip md-direction="right" style="font-size: 14px;">
+					 Width of the structure
+				  </md-tooltip>
+				</md-input-container>
+			  </div>
+			  <div class="row">
+				<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+				  <label>Truck Percentage</label>
+				  <input required="" name="truckhypo" step="any" type="number" ng-model="hypoData.truck">
+					<md-icon><i class="material-icons">info_outline</i></md-icon> 
+					  <md-tooltip md-direction="right" style="font-size: 14px;">
+						 Truck percentage?
+					  </md-tooltip>
+				</md-input-container>
+			  </div>
+			  <div ng-switch on="typeOfApproach.type">
+				  <div ng-switch-when="Probabilistic" class="row">
+					<!-- ui-sref to direct to the next page - lcca.html -->
+					<a ui-sref="home.hypothetical.lcca" class="white-text" ng-click="setHypotheticalData(hypoData.analysis,typeOfDis,hypoData.trafficVolume,hypoData.noLanes,hypoData.length,hypoData.width,hypoData.truck)"><md-button ng-disabled="hypoForm.$invalid" class="md-primary md-raised">Continue</md-button></a>
+				  </div>
+ 				  <div ng-switch-when="Deterministic" class="row">
+					<!-- ui-sref to direct to the next page - lcca.html -->
+					<a ui-sref="home.hypothetical.lcca" class="white-text" ng-click="setHypotheticalData(hypoData.analysis,hypoData.disc_rate,hypoData.trafficVolume,hypoData.noLanes,hypoData.length,hypoData.width,hypoData.truck)"><md-button ng-disabled="hypoForm.$invalid" class="md-primary md-raised">Continue</md-button></a>
+				  </div>
+			  </div>
+		  </div>
+		</form>
+		<script type="text/ng-template" id="tabDialog.disc_rate.html">
+		  <md-dialog layout-padding="">
+			<form name="hypoForm">
+			<div ng-switch on="typeOfDis">
+			 <div ng-switch-when="Fixed">
+			   <md-dialog-content>
+				<h4>Enter the discount rate</h4>
+				<md-input-container name="" class="md-block" flex-gt-sm="">
+				  <label>Discount rate</label>
+				  <input required="" name="disc_rateFix" step="any" type="number" ng-model="dialogData.disc_rateFix" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <div ng-messages="hypoForm.disc_rateFix.$error" multiple="" ng-if="hypoForm.disc_rateFix.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+			   </md-dialog-content>
+			 </div>
+			 <div ng-switch-when="Normal">
+			   <md-dialog-content>
+				<h4>Enter the discount rate</h4>
+				<md-input-container name="normal" class="md-block" flex-gt-sm="">
+				  <label>Mean</label>
+				  <input required="" name="disc_rateMean" step="any" type="number" ng-model="dialogData.disc_rateMean" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <div ng-messages="hypoForm.disc_rateMean.$error" multiple="" ng-if="hypoForm.disc_rateMean.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+				<md-input-container name="normal" class="md-block" flex-gt-sm="">
+				  <label>Standard Deviation</label>
+				  <input required="" name="disc_rateStd" step="any" type="number" ng-model="dialogData.disc_rateStd" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <div ng-messages="hypoForm.disc_rateStd.$error" multiple="" ng-if="hypoForm.disc_rateStd.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+			   </md-dialog-content>
+			 </div>
+			 <div ng-switch-when="Triangular">
+			   <md-dialog-content>
+				<h4>Enter the discount rate</h4>
+				<md-input-container name="Triangular" class="md-block" flex-gt-sm="">
+				  <label>Minimum</label>
+				  <input required="" name="disc_rateMin" step="any" type="number" ng-model="dialogData.disc_rateMin" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <div ng-messages="hypoForm.disc_rateMin.$error" multiple="" ng-if="hypoForm.disc_rateMin.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+				<md-input-container name="normal" class="md-block" flex-gt-sm="">
+				  <label>Most Likely</label>
+				  <input required="" name="disc_rateMsl" step="any" type="number" ng-model="dialogData.disc_rateMsl" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <div ng-messages="hypoForm.disc_rateMsl.$error" multiple="" ng-if="hypoForm.disc_rateMsl.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+				<md-input-container name="normal" class="md-block" flex-gt-sm="">
+				  <label>Maximum</label>
+				  <input required="" name="disc_rateMax" step="any" type="number" ng-model="dialogData.disc_rateMax" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+				  <div ng-messages="hypoForm.disc_rateMax.$error" multiple="" ng-if="hypoForm.disc_rateMax.$dirty">
+					<div ng-message="required" style="text-align:left;">This field is required.</div>
+					<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+				  </div>
+				</md-input-container>
+			   </md-dialog-content>
+			 </div>
+			</div>
+				<md-dialog-actions layout="row">
+					<md-button ng-disabled="hypoForm.$invalid" ng-click="answer(dialogData.disc_rateFix, dialogData.disc_rateMean , dialogData.disc_rateStd , dialogData.disc_rateMin , dialogData.disc_rateMsl, dialogData.disc_rateMax)">
+					   Okay
+					</md-button>
+				</md-dialog-actions>
+			</form>
+		  </md-dialog>
+	    </script>
+	</div>
+</div>
+
+
+  
+  

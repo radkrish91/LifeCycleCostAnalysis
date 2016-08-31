@@ -1,0 +1,880 @@
+
+<script src="./static/js/myScript.js"></script>
+ 
+ <ui-breadcrumbs displayname-property="data.displayName" abstract-proxy-property="data.proxy" template-url="./static/directives/uiBreadcrumbs/uiBreadcrumbs.tpl.html" class="fillCrumb"></ui-breadcrumbs>
+
+ <div class="container">
+ <form ng-submit="addTab(tTitle,convMatName,newMatName)" layout="column" class="md-padding" style="padding-top: 0;">
+    <div layout="row" layout-sm="column">
+		<div flex="" style="position: relative;">
+		  <br>
+		  <h1 class="md-subhead teal-text" style="position: relative; bottom: 0; left: 0; margin: 0; font-size:20px; font-weight: 500; text-transform: uppercase; line-height: 45px; white-space: nowrap;">Fill these to start a new Scenario</h1>
+		</div>
+	</div>
+    <div layout-gt-sm="row">
+      <md-input-container class="md-block md-icon-float" flex-gt-sm="">
+	    <md-icon><i class="material-icons"></i>mode_edit</md-icon>
+        <label class="bigClass">Name of Scenario</label>
+        <input ng-model="tTitle">
+      </md-input-container>
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <md-input-container class="md-block" flex-gt-sm="">
+        <label>Name Of Conventional Material</label>
+        <input ng-model="convMatName">
+      </md-input-container>
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Name Of New Material</label>
+        <input ng-model="newMatName">
+      </md-input-container>
+      <md-button class="md-primary md-raised" ng-disabled="!tTitle || !convMatName || !newMatName" type="submit" style="margin-right: 0;" onclick="Materialize.toast('Hover over the fields for description', 7000)">Add Scenario</md-button>
+    </div>
+  </form>
+
+ <div class="sample tabsdemoDynamicTabs md-padding dialogdemoBasicUsage" id="popupContainer" layout="column" ng-show="isVisible()">
+  <md-content class="md-padding">
+	<div class="md-whiteframe-z1" layout-margin layout="column">
+    <md-tabs md-dynamic-height="true" md-selected="selectedIndex" md-border-bottom="" md-autoselect="">
+      <md-tab ng-repeat="tab in tabs" ng-disabled="tab.disabled" label="{{tab.title}}">
+        <div class="demo-tab tab{{$index%4}}" style="padding: 25px;">
+			  <div class="row inputdemoErrorsAdvanced">
+				<form name="lccaFormMain" class="col s6 z-depth-0">
+				  <div class="row">
+					<div class="col s6">
+						<div class="section">
+							<h5 class="center-align"> <div ng-bind="tab.convMatName"></div> </h5>
+						</div>
+					</div>
+					<div class="col s6">
+						<div class="section">
+							<h5 class="center-align"> <div ng-bind="tab.newMatName"></div> </h5>
+						</div>
+					</div>
+				  </div>
+				  <div class="section">
+				  
+					<div ng-switch on="formData.typeOfApproach">
+						<div ng-switch-when="Probabilistic" class="row">
+							<div class="col s6">
+								<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+								  <label>Service Life</label>
+								  <md-select required="" ng-model="typeOfDis" ng-change="showTypeOfDistribution($event,typeOfDis)">
+									  <md-option ng-repeat="dis in typeOfDistribution" value="{{dis.name}}">
+										{{dis.name}}
+									  </md-option>
+								  </md-select>
+								  <div ng-messages="lccaFormMain.typeOfDis.$error" multiple="" ng-if="lccaFormMain.typeOfDis.$dirty">
+									<div ng-message="required" style="text-align:left;">This field is required.</div>
+								  </div>
+								</md-input-container>
+							</div>
+							<div class="col s6">
+								<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+								  <label>Service Life</label>
+								  <md-select required="" ng-model="typeOfDisNew" ng-change="showTypeOfDistributionNew($event,typeOfDisNew)">
+									  <md-option ng-repeat="dis in typeOfDistribution" value="{{dis.name}}">
+										{{dis.name}}
+									  </md-option>
+								  </md-select>
+								  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+								  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+									  Service life is the estimated time period that the structure will remain viable for public use at or above a minimum level of service.
+								  </md-tooltip>
+								  <div ng-messages="lccaFormMain.typeOfDisNew.$error" multiple="" ng-if="lccaFormMain.typeOfDisNew.$dirty">
+									<div ng-message="required" style="text-align:left;">This field is required.</div>
+								  </div>
+								</md-input-container>
+								<br><br>
+							</div>
+						</div>
+						
+						<div ng-switch-when="Deterministic" class="row">
+							<div class="col s6">
+								<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+								  <label>Service Life</label>
+								  <input required="" name="servlife" type="number" step="any" ng-model="formData.servlife" min="15" max="125">
+								  <div ng-messages="lccaFormMain.servlife.$error" multiple="" ng-if="lccaFormMain.servlife.$dirty">
+									<div ng-message="required" style="text-align:left;">This field is required.</div>
+									<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+									<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+									<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+								  </div>
+								</md-input-container>
+							</div>
+							<div class="col s6">
+								<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+								  <label>Service Life</label>
+								  <input required="" name="newservlife" type="number" step="any" ng-model="formData.newservlife" min="15" max="125">
+								  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+								  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+									  Service life is the estimated time period that the structure will remain viable for public use at or above a minimum level of service.
+								  </md-tooltip>
+								  <div ng-messages="lccaFormMain.newservlife.$error" multiple="" ng-if="lccaFormMain.newservlife.$dirty">
+									<div ng-message="required" style="text-align:left;">This field is required.</div>
+									<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125 </div>
+									<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+									<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+								  </div>
+								</md-input-container>
+							</div>
+						</div>
+					</div>
+					
+					  <div class="row">
+					   <div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Material Unit Price</label>
+						  <input required="" name="cmat_val" step="any" ng-model="formData.cmat_val" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <div ng-messages="lccaFormMain.cmat_val.$error" multiple="" ng-if="lccaFormMain.cmat_val.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+						<div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Material Unit Price</label>
+						  <input required="" name="nmat_val" step="any" ng-model="formData.nmat_val" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+							  Material unit prices may be determined using the bid price or expected market price
+						  </md-tooltip>
+						  <div ng-messages="lccaFormMain.nmat_val.$error" multiple="" ng-if="lccaFormMain.nmat_val.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+					  </div>
+					  
+					  <div class="row">
+					   <div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Construction Unit Price</label>
+						  <input required="" name="ccon_val" step="any" ng-model="formData.ccon_val" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <div ng-messages="lccaFormMain.ccon_val.$error" multiple="" ng-if="lccaFormMain.ccon_val.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+						<div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Construction Unit Price</label>
+						  <input required="" name="ncon_val" step="any" ng-model="formData.ncon_val" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+							  The total cost of eligible items used to construct all bridges (e.g. material, labor) is divided by the total area of all bridges to determine the average construction unit cost by system.
+						  </md-tooltip>
+						  <div ng-messages="lccaFormMain.ncon_val.$error" multiple="" ng-if="lccaFormMain.ncon_val.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+					  </div>
+					 
+					  <div class="row">
+					   <div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Depth</label>
+						  <input required="" name="conv_depth" step="any" ng-model="formData.conv_depth" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <div ng-messages="lccaFormMain.conv_depth.$error" multiple="" ng-if="lccaFormMain.conv_depth.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+						<div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Depth</label>
+						  <input required="" name="new_depth" step="any" ng-model="formData.new_depth" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+							  Depth
+						  </md-tooltip>
+						  <div ng-messages="lccaFormMain.new_depth.$error" multiple="" ng-if="lccaFormMain.new_depth.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+					  </div>
+					 
+					  <div class="row">
+					   <div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Design/Lab testing cost</label>
+						  <input required="" name="conv_des" step="any" ng-model="formData.conv_des" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						  <div ng-messages="lccaFormMain.conv_des.$error" multiple="" ng-if="lccaFormMain.conv_des.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+						<div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Design/Lab testing cost</label>
+						  <input required="" name="new_des" step="any" ng-model="formData.new_des" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+							  Depth
+						  </md-tooltip>
+						  <div ng-messages="lccaFormMain.new_des.$error" multiple="" ng-if="lccaFormMain.new_des.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+					  </div>
+					  
+					  
+					  <div class="row">
+					   <div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Key deterioration mode</label>
+						  <input required="" name="conv_key" step="any" ng-model="formData.conv_key">
+						  <div ng-messages="lccaFormMain.conv_key.$error" multiple="" ng-if="lccaFormMain.conv_key.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+						<div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Key deterioration mode</label>
+						  <input required="" name="new_key" step="any" ng-model="formData.new_key">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+							  This is a cost component related to the design stage of the new material. These costs are generated from lab testing, evaluating, and bringing the new material to accepted, mainstream use.
+						  </md-tooltip>
+						  <div ng-messages="lccaFormMain.new_key.$error" multiple="" ng-if="lccaFormMain.new_key.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+					  </div>
+					  
+					<div class="row">
+					  <div ng-switch on="formData.detFuncShow">
+						<div ng-switch-when="dropDown" class="col s6">
+							<md-input-container class="md-block" flex-gt-sm="">
+								<label>Deterioration function</label>
+								<md-select required="" name="detFunc" ng-model="formData.detFuncType" ng-change="showPrerenderedDetFunc($event)">
+								  <md-option ng-repeat="func in detfuncs" value="{{func.name}}">
+									{{func.name}}
+								  </md-option>
+								</md-select>
+								<div ng-messages="lccaFormMain.detFunc.$error" multiple="" ng-if="lccaFormMain.detFunc.$dirty">
+									<div ng-message="required" style="text-align:left;">This field is required.</div>
+								</div>
+							</md-input-container>
+						</div>
+						<div ng-switch-when="textBox" class="col s6">
+							<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+							  <label>Deterioration function</label>
+							  <input required="" name="detFuncCon" disabled="" step="any" ng-model="formData.detFuncCon">
+							</md-input-container>
+						</div>
+					  </div>
+						
+					  <div ng-switch on="formData.detFuncNewShow">
+						<div ng-switch-when="dropDown" class="col s6">
+							<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+								  <label>Deterioration function</label>
+								  <md-select required="" ng-model="detFuncNew" ng-change="showPrerenderedDetFuncNew($event)">
+									  <md-option ng-repeat="func in detfuncs" value="{{func.name}}">
+										{{func.name}}
+									  </md-option>
+								  </md-select>
+								  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+								  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+									  Deterioration of the infrastructure is usually a function of material type, environment loading, structural loading, and various other factors. The deterioraton function of conventional material can be estimated from historical data such as Pavement management system/National Bridge Inventory.
+								  </md-tooltip>
+								  <div ng-messages="lccaFormMain.detFuncNew.$error" multiple="" ng-if="lccaFormMain.detFuncNew.$dirty">
+									<div ng-message="required" style="text-align:left;">This field is required.</div>
+								  </div>
+								</md-input-container>
+						</div>
+						<div ng-switch-when="textBox" class="col s6">
+							<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+							  <label>Deterioration function</label>
+							  <input required="" name="detFuncNew" step="any" disabled="" ng-model="formData.detFuncNew">
+							  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+							  <md-tooltip md-direction="bottom" style="font-size: 14px;">
+									  Deterioration of the infrastructure is usually a function of material type, environment loading, structural loading, and various other factors. The deterioraton function of conventional material can be estimated from historical data such as Pavement management system/National Bridge Inventory.
+							  </md-tooltip>
+							</md-input-container>
+						</div>
+					  </div>
+					</div>
+					  <br><br>
+					 
+					  <div class="row">
+					   <div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Environm. Energy Information</label>
+						  <input required="" name="conv_ener" step="any" ng-model="formData.conv_ener">
+						  <div ng-messages="lccaFormMain.conv_ener.$error" multiple="" ng-if="lccaFormMain.servlife.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+						<div class="col s6">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Environm. Energy Information</label>
+						  <input required="" name="conv_enerNew" step="any" ng-model="formData.conv_enerNew">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="right" style="font-size: 14px;">
+							  Description for env. energy information
+						  </md-tooltip>
+						  <div ng-messages="lccaFormMain.conv_enerNew.$error" multiple="" ng-if="lccaFormMain.servlife.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+					  </div>
+					  					  
+				  </div>
+				 
+				  <div style="visibility: hidden">
+					<div class="md-dialog-container" id="maintenancePreRend">
+					  <md-dialog layout-padding="">
+						<h4>Maintenance Activity</h4>
+						<table class='centered'>
+							<thead>
+								<tr>
+									<th>Material</th>
+									<th>Name of Activity</th>
+									<th>Schedule(in years)</th>
+									<th>Work Zone Duration(in days)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td> Conventional Material </td>
+									<td><input required="" name="name" type="text" ng-model="formData.name"></td>
+									<td><input required="" name="years" type="number" ng-model="formData.years"></td>
+									<td><input required="" name="days" type="number" ng-model="formData.days"></td>
+								</tr>
+								<tr>
+									<td>New material</td>
+									<td><input required="" name="new_name" type="text" ng-model="formData.new_name"></td>
+									<td><input required="" name="new_years" type="number" ng-model="formData.new_years"></td>
+									<td><input required="" name="new_days" type="number" ng-model="formData.new_days"></td>
+								</tr>
+							</tbody>
+						</table>
+					  </md-dialog>
+					</div>
+				  </div>
+				  
+				  <div style="visibility: hidden">
+					<div class="md-dialog-container" id="repairPreRend">
+					  <md-dialog layout-padding="">
+						<h4>Repair Activity</h4>
+						<table class='centered'>
+							<thead>
+								<tr>
+									<th>Material</th>
+									<th>Name of Activity</th>
+									<th>Schedule(in years)</th>
+									<th>Work Zone Duration(in days)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td> Conventional Material </td>
+									<td><input required="" name="name" type="text" ng-model="formData.name1"></td>
+									<td><input required="" name="years" type="number" ng-model="formData.years1"></td>
+									<td><input required="" name="days" type="number" ng-model="formData.days1"></td>
+								</tr>
+								<tr>
+									<td>New material</td>
+									<td><input required="" name="new_name" type="text" ng-model="formData.new_name1"></td>
+									<td><input required="" name="new_years" type="number" ng-model="formData.new_years1"></td>
+									<td><input required="" name="new_days" type="number" ng-model="formData.new_days1"></td>
+								</tr>
+							</tbody>
+						</table>
+					  </md-dialog>
+					</div>
+				  </div>
+				  
+				  <div style="visibility: hidden">
+					<div class="md-dialog-container" id="rehabPreRend">
+					  <md-dialog layout-padding="">
+						<h4>Rehabilitation Activity</h4>
+						<table class='centered'>
+							<thead>
+								<tr>
+									<th>Material</th>
+									<th>Name of Activity</th>
+									<th>Schedule(in years)</th>
+									<th>Work Zone Duration(in days)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td> Conventional Material </td>
+									<td><input required="" name="name" type="text" ng-model="formData.name2"></td>
+									<td><input required="" name="years" type="number" ng-model="formData.years2"></td>
+									<td><input required="" name="days" type="number" ng-model="formData.days2"></td>
+								</tr>
+								<tr>
+									<td>New material</td>
+									<td><input required="" name="new_name" type="text" ng-model="formData.new_name2"></td>
+									<td><input required="" name="new_years" type="number" ng-model="formData.new_years2"></td>
+									<td><input required="" name="new_days" type="number" ng-model="formData.new_days2"></td>
+								</tr>
+							</tbody>
+						</table>
+					  </md-dialog>
+					</div>
+				  </div>
+				  
+				  <div style="visibility: hidden">
+					<div class="md-dialog-container" id="matMixPreRend">
+					  <md-dialog layout-padding="">
+						<h4>Material Mix & Distribution</h4>
+						<div flex-xs="" flex-gt-xs="100" layout="row">
+							<md-card>
+								<md-card-title>
+								  <md-card-title-text>
+									<span class="md-headline">Materials & Admixtures</span>
+								  </md-card-title-text>
+								</md-card-title>
+								
+								<md-card-content>
+								<md-divider></md-divider>
+									<table class="centered">
+										<thead>
+										  
+										</thead>
+										
+										<tbody>
+										  <tr>
+											<td><input name="adm" type="text" ng-model="formData.adm"></td>
+										  </tr>
+										  <tr>
+											<td><input name="adm1" type="text" ng-model="formData.adm1"></td>
+										  </tr>
+										  <tr>
+											<td><input name="adm2" type="text" ng-model="formData.adm2"></td>
+										  </tr>
+										  <tr>
+											<td><input name="adm3" type="text" ng-model="formData.adm3"></td>
+										  </tr>
+										  <tr>
+											<td><input name="adm4" type="text" ng-model="formData.adm4"></td>
+										  </tr>
+										</tbody>
+									</table>
+								</md-card-content>
+							</md-card>
+							
+							<md-card>
+								<md-card-title>
+								  <md-card-title-text>
+									<span class="md-headline" style="text-align:center">Conventional Material</span>
+								  </md-card-title-text>
+								</md-card-title>
+								
+								<md-card-content>
+								<md-divider></md-divider>
+									<table class="centered">
+										<thead>
+										  <tr>
+											  <th>Amount</th>
+											  <th>Unit</th>
+											  <th>Cost</th>
+										  </tr>
+										</thead>
+										
+										<tbody>
+										  <tr>
+											<td><input name="amount" type="number" ng-model="formData.amount"></td>
+											<td><input name="unit" type="number" ng-model="formData.unit"></td>
+											<td><input name="cost" type="number" ng-model="formData.cost"></td>
+										  </tr>
+										  <tr>
+											<td><input name="amount1" type="number" ng-model="formData.amount1"></td>
+											<td><input name="unit1" type="number" ng-model="formData.unit1"></td>
+											<td><input name="cost1" type="number" ng-model="formData.cost1"></td>
+										  </tr>
+										  <tr>
+											<td><input name="amount2" type="number" ng-model="formData.amount2"></td>
+											<td><input name="unit2" type="number" ng-model="formData.unit2"></td>
+											<td><input name="cost2" type="number" ng-model="formData.cost2"></td>
+										  </tr>
+										  <tr>
+											<td><input name="amount3" type="number" ng-model="formData.amount3"></td>
+											<td><input name="unit3" type="number" ng-model="formData.unit3"></td>
+											<td><input name="cost3" type="number" ng-model="formData.cost3"></td>
+										  </tr>
+										  <tr>
+											<td><input name="amount4" type="number" ng-model="formData.amount4"></td>
+											<td><input name="unit4" type="number" ng-model="formData.unit4"></td>
+											<td><input name="cost4" type="number" ng-model="formData.cost4"></td>
+										  </tr>
+										  <tr>
+											<td></td>
+											<td>Total Cost</td>
+											<td><input name="totalCost" type="number" ng-model="formData.totalCost"></td>
+										  </tr>
+										</tbody>
+									</table>
+								</md-card-content>
+							</md-card>
+							<md-card>
+								<md-card-title>
+								  <md-card-title-text>
+									<span class="md-headline" style="text-align:center">New Material</span>
+								  </md-card-title-text>
+								</md-card-title>
+								
+								<md-card-content>
+								<md-divider></md-divider>
+									<table class="centered">
+										<thead>
+										  <tr>
+											  <th>Amount</th>
+											  <th>Unit</th>
+											  <th>Cost</th>
+										  </tr>
+										</thead>
+										
+										<tbody>
+										  <tr>
+											<td><input name="new_amount" type="number" ng-model="formData.new_amount"></td>
+											<td><input name="new_unit" type="number" ng-model="formData.new_unit"></td>
+											<td><input name="new_cost" type="number" ng-model="formData.new_cost"></td>
+										  </tr>
+										  <tr>
+											<td><input name="new_amount1" type="number" ng-model="formData.new_amount1"></td>
+											<td><input name="new_unit1" type="number" ng-model="formData.new_unit1"></td>
+											<td><input name="new_cost1" type="number" ng-model="formData.new_cost1"></td>
+										  </tr>
+										  <tr>
+											<td><input name="new_amount2" type="number" ng-model="formData.new_amount2"></td>
+											<td><input name="new_unit2" type="number" ng-model="formData.new_unit2"></td>
+											<td><input name="new_cost2" type="number" ng-model="formData.new_cost2"></td>
+										  </tr>
+										  <tr>
+											<td><input name="new_amount3" type="number" ng-model="formData.new_amount3"></td>
+											<td><input name="new_unit3" type="number" ng-model="formData.new_unit3"></td>
+											<td><input name="new_cost3" type="number" ng-model="formData.new_cost3"></td>
+										  </tr>
+										  <tr>
+											<td><input name="new_amount4" type="number" ng-model="formData.new_amount4"></td>
+											<td><input name="new_unit4" type="number" ng-model="formData.new_unit4"></td>
+											<td><input name="new_cost4" type="number" ng-model="formData.new_cost4"></td>
+										  </tr>
+										  <tr>
+											<td></td>
+											<td>Total Cost</td>
+											<td><input name="new_totalCost" type="number" ng-model="formData.new_totalCost"></td>
+										  </tr>
+										</tbody>
+									</table>
+								</md-card-content>
+							  </md-card>
+							</div>
+					  </md-dialog>
+					</div>
+				  </div>
+				 </form>
+				 
+				 <script type="text/ng-template" id="tabDialog.servLife.html">
+					  <md-dialog layout-padding="">
+						<form name="lccaForm">
+						<div ng-switch on="typeOfDisCon">
+						 <div ng-switch-when="Fixed">
+						   <md-dialog-content>
+							<h4>Enter the service life</h4>
+							<md-input-container name="" class="md-block" flex-gt-sm="">
+							  <label>Service Life</label>
+							  <input required="" name="servlifeFix" step="any" type="number" ng-model="dialogData.servlifeFix" min="15", max="125">
+							  <div ng-messages="lccaForm.servlifeFix.$error" multiple="" ng-if="lccaForm.servlifeFix.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+						 </div>
+						 <div ng-switch-when="Normal">
+						   <md-dialog-content>
+							<h4>Enter the service life</h4>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Mean</label>
+							  <input required="" name="servlifeMean" step="any" type="number" ng-model="dialogData.servlifeMean" min="15", max="125">
+							  <div ng-messages="lccaForm.servlifeMean.$error" multiple="" ng-if="lccaForm.servlifeMean.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Standard Deviation</label>
+							  <input required="" name="servlifeStd" step="any" type="number" ng-model="dialogData.servlifeStd" min="15", max="125">
+							  <div ng-messages="lccaForm.servlifeStd.$error" multiple="" ng-if="lccaForm.servlifeStd.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+						 </div>
+						 <div ng-switch-when="Triangular">
+						   <md-dialog-content>
+							<h4>Enter the service life</h4>
+							<md-input-container name="Triangular" class="md-block" flex-gt-sm="">
+							  <label>Minimum</label>
+							  <input required="" name="servlifeMin" step="any" type="number" ng-model="dialogData.servlifeMin" min="15", max="125">
+							  <div ng-messages="lccaForm.servlifeMin.$error" multiple="" ng-if="lccaForm.servlifeMin.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Most Likely</label>
+							  <input required="" name="servlifeMsl" step="any" type="number" ng-model="dialogData.servlifeMsl" min="15", max="125">
+							  <div ng-messages="lccaForm.servlifeMsl.$error" multiple="" ng-if="lccaForm.servlifeMsl.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Maximum</label>
+							  <input required="" name="servlifeMax" step="any" type="number" ng-model="dialogData.servlifeMax" min="15", max="125">
+							  <div ng-messages="lccaForm.servlifeMax.$error" multiple="" ng-if="lccaForm.servlifeMax.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+						 </div>
+						</div>
+							<md-dialog-actions layout="row">
+								<md-button ng-disabled="lccaForm.$invalid" ng-click="answer()">
+								   Okay
+								</md-button>
+							</md-dialog-actions>
+						</form>
+					  </md-dialog>
+				  </script>
+				  
+				  <script type="text/ng-template" id="tabDialog.newservLife.html">
+					  <md-dialog layout-padding="">
+						<form name="lccaFormNew">
+						<div ng-switch on="typeOfDis">
+						 <div ng-switch-when="Fixed">
+						   <md-dialog-content>
+							<h4>Enter the discount rate</h4>
+							<md-input-container name="" class="md-block" flex-gt-sm="">
+							  <label>Service Life</label>
+							  <input required="" name="servlifeNewFix" step="any" type="number" ng-model="dialogData.servlifeNewFix" min="15", max="125">
+							  <div ng-messages="lccaFormNew.servlifeNewFix.$error" multiple="" ng-if="lccaFormNew.servlifeNewFix.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+						 </div>
+						 <div ng-switch-when="Normal">
+						   <md-dialog-content>
+							<h4>Enter the service life</h4>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Mean</label>
+							  <input required="" name="servlifeNewMean" step="any" type="number" ng-model="dialogData.servlifeNewMean" min="15", max="125">
+							  <div ng-messages="lccaFormNew.servlifeNewMean.$error" multiple="" ng-if="lccaFormNew.servlifeNewMean.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Standard Deviation</label>
+							  <input required="" name="servlifeNewStd" step="any" type="number" ng-model="dialogData.servlifeNewStd" min="15", max="125">
+							  <div ng-messages="lccaFormNew.servlifeNewStd.$error" multiple="" ng-if="lccaFormNew.servlifeNewStd.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+						 </div>
+						 <div ng-switch-when="Triangular">
+						   <md-dialog-content>
+							<h4>Enter the service life</h4>
+							<md-input-container name="Triangular" class="md-block" flex-gt-sm="">
+							  <label>Minimum</label>
+							  <input required="" name="servlifeNewMin" step="any" type="number" ng-model="dialogData.servlifeNewMin" min="15", max="125">
+							  <div ng-messages="lccaFormNew.servlifeNewMin.$error" multiple="" ng-if="lccaFormNew.servlifeNewMin.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Most Likely</label>
+							  <input required="" name="servlifeNewMsl" step="any" type="number" ng-model="dialogData.servlifeNewMsl" min="15", max="125">
+							  <div ng-messages="lccaFormNew.servlifeNewMsl.$error" multiple="" ng-if="lccaFormNew.servlifeNewMsl.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+							<md-input-container name="normal" class="md-block" flex-gt-sm="">
+							  <label>Maximum</label>
+							  <input required="" name="servlifeNewMax" step="any" type="number" ng-model="dialogData.servlifeNewMax" min="15", max="125">
+							  <div ng-messages="lccaFormNew.servlifeNewMax.$error" multiple="" ng-if="lccaFormNew.servlifeNewMax.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be a number and less than 125</div>
+								<div ng-message="min" style="text-align:left;">Serive life should be more than 25 years </div>
+								<div ng-message="max" style="text-align:left;">Service life should be less than 125 years </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+						 </div>
+						</div>
+							<md-dialog-actions layout="row">
+								<md-button ng-disabled="lccaFormNew.$invalid" ng-click="answer()">
+								   Okay
+								</md-button>
+							</md-dialog-actions>
+						</form>
+					  </md-dialog>
+				  </script>
+				  
+				  <script type="text/ng-template" id="tabDialog.detFuncCon.html">
+					  <md-dialog layout-padding="">
+						<form name="lccaFormDetFunc">
+						   <md-dialog-content>
+							<h4>Enter the linear deterioration function</h4>
+							<md-input-container class="md-block" flex-gt-sm="">
+							  <label>Deterioration function(Linear)</label>
+							  <input required="" name="detFuncLinearConv" step="any" ng-model="formData.detFuncLinearConv" ng-pattern="pattern">
+							  <div ng-messages="lccaFormDetFunc.detFuncLinearConv.$error" multiple="" ng-if="lccaFormDetFunc.detFuncLinearConv.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be of the form y=ax+b where a and b are integers </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+							<md-dialog-actions layout="row">
+								<md-button ng-disabled="lccaFormDetFunc.$invalid" ng-click="answer(formData.detFuncLinearConv)">
+								   Okay
+								</md-button>
+							</md-dialog-actions>
+						</form>
+					  </md-dialog>
+				  </script>
+				  
+				  <script type="text/ng-template" id="tabDialog.detFuncNew.html">
+					  <md-dialog layout-padding="">
+						<form name="lccaFormDetFuncNew">
+						   <md-dialog-content>
+							<h4>Enter the linear deterioration function</h4>
+							<md-input-container class="md-block" flex-gt-sm="">
+							  <label>Deterioration function(Linear)</label>
+							  <input required="" name="detFuncLinearNew" step="any" ng-model="formData.detFuncLinearNew" ng-pattern="pattern">
+							  <div ng-messages="lccaFormDetFuncNew.detFuncLinearNew.$error" multiple="" ng-if="lccaFormDetFuncNew.detFuncLinearNew.$dirty">
+								<div ng-message="required" style="text-align:left;">This field is required.</div>
+								<div ng-message="pattern" style="text-align:left;">Should be of the form y=ax+b where a and b are integers </div>
+							  </div>
+							</md-input-container>
+						   </md-dialog-content>
+							<md-dialog-actions layout="row">
+								<md-button ng-disabled="lccaFormDetFuncNew.$invalid" ng-click="answer(formData.detFuncLinearNew)">
+								   Okay
+								</md-button>
+							</md-dialog-actions>
+						</form>
+					  </md-dialog>
+				  </script>
+				  
+				 <div class="col s6">
+					  <md-content>
+						<md-list>
+						  <md-divider></md-divider>
+						  <md-list-item class="md-3-line">
+							<ng-md-icon icon="add_circle" style="fill: teal" size="78" ng-click="showPrerenderedMaintenance($event)"></ng-md-icon> 
+							<div class="md-list-item-text">
+							  <h3>Add Maintenance Activity</h3>
+							  <p>This is a maintenance activity</p>
+							</div>
+							<md-divider></md-divider>
+						  </md-list-item>
+						  
+						  <md-list-item class="md-3-line">
+							<ng-md-icon icon="add_circle" style="fill: teal" size="78" ng-click="showPrerenderedRepair($event)"></ng-md-icon> 
+							<div class="md-list-item-text">
+							  <h3>Add Repair Activity</h3>
+							  <p>This is a repair activity</p>
+							</div>
+							<md-divider></md-divider>
+						  </md-list-item>
+						  <md-list-item class="md-3-line">
+							<ng-md-icon icon="add_circle" style="fill: teal" size="78" ng-click="showPrerenderedRehab($event)"></ng-md-icon> 
+							<div class="md-list-item-text">
+							  <h3>Add Rehabilitation Activity</h3>
+							  <p>This is a rehabilitation activity</p>
+							</div>
+							<md-divider></md-divider>
+						  </md-list-item>
+						  <md-list-item class="md-3-line">
+							<ng-md-icon icon="add_circle" style="fill: teal" size="78" ng-click="showPrerenderedMatMix($event)"></ng-md-icon> 
+							<div class="md-list-item-text">
+							  <h3>Add material mix & distribution</h3>
+							  <p>This is a material mix & distribution</p>
+							</div>
+						  </md-list-item>
+						</md-list>
+					  </md-content>
+				 </div>
+			  </div>       
+          <div ng-switch on="formData.typoOfScenario">
+			  <div ng-switch-when="real" class="center-align">
+				<md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Remove Scenario</md-button>
+				<md-button class="md-primary md-raised" ng-disabled="lccaFormMain.$pristine" ng-click="showConfirm($event)">Restore Defaults</md-button>
+				<a ui-sref="home.real.lcca.inputSummary" class="white-text"><md-button class="md-primary md-raised" ng-disabled="lccaFormMain.$invalid" ng-click="setLcca(formData.servlife, formData.newservlife, formData.cmat_val, formData.nmat_val, formData.ccon_val, formData.ncon_val, formData.conv_depth, formData.new_depth, formData.conv_des, formData.new_des, formData.conv_key, formData.new_key, formData.conv_fun, formData.new_fun, formData.conv_ener, formData.conv_enerNew, formData.name, formData.years, formData.days, formData.new_name, formData.new_years, formData.new_days, formData.name1, formData.years1, formData.days1, formData.new_name1, formData.new_years1, formData.new_days1, formData.name2, formData.years2, formData.days2, formData.new_name2, formData.new_years2, formData.new_days2)">Validate Input</md-button></a>
+			  </div>
+			  <div ng-switch-when="hypothetical" class="center-align">
+				<md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Remove Scenario</md-button>
+				<md-button class="md-primary md-raised" ng-disabled="lccaFormMain.$pristine" ng-click="showConfirm($event)">Restore Defaults</md-button>
+				<a ui-sref="home.hypothetical.lcca.inputSummary" class="white-text"><md-button class="md-primary md-raised" ng-disabled="lccaFormMain.$invalid" ng-click="setLcca(formData.servlife, formData.newservlife, formData.cmat_val, formData.nmat_val, formData.ccon_val, formData.ncon_val, formData.conv_depth, formData.new_depth, formData.conv_des, formData.new_des, formData.conv_key, formData.new_key, formData.conv_fun, formData.new_fun, formData.conv_ener, formData.conv_enerNew, formData.name, formData.years, formData.days, formData.new_name, formData.new_years, formData.new_days, formData.name1, formData.years1, formData.days1, formData.new_name1, formData.new_years1, formData.new_days1, formData.name2, formData.years2, formData.days2, formData.new_name2, formData.new_years2, formData.new_days2)">Validate Input</md-button></a>
+			  </div>
+		   </div>
+        </div>
+      </md-tab>
+    </md-tabs>
+	</div>
+  </md-content>
+  
+</div>
+ </div>
+
+  <!--  Scripts-->
+  
+  
+  
+  

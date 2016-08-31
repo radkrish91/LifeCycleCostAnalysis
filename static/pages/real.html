@@ -1,0 +1,211 @@
+<!-- This view is controlled by the realController (see controller.js file-->
+
+<script src="./static/js/myScript.js"></script>
+	<!-- container to hold the values for the real infrastructure in NJ, having default values -->
+	<ui-breadcrumbs displayname-property="data.displayName" abstract-proxy-property="data.proxy" template-url="./static/directives/uiBreadcrumbs/uiBreadcrumbs.tpl.html" class="fillCrumb"></ui-breadcrumbs>
+
+	<div class="container">
+		<div class="row">
+			<form name="realForm" class="col s6 z-depth-0">
+			  <div class="row">
+				<div class="col s6 offset-s9">
+					<md-radio-group required="" ng-model="choose.type">
+
+					  <md-radio-button value="bridge" class="md-primary">Bridge</md-radio-button>
+					  <md-radio-button value="pavement" class="md-primary"> Pavement </md-radio-button>
+
+					</md-radio-group>
+				</div>
+			  </div>
+			  <div class="row">
+				<div class="col s12">
+				<!-- Select button, when user clicks a value from dropdown, will call hasChanged function (see controller.js file-->
+				<md-input-container class="md-block">
+					<label>Choose SRI</label>
+					<md-select ng-model="selectedSRI" ng-change="hasChanged()">
+					 <md-option ng-repeat="option in availableOptions" value="{{option.sri}}" >{{option.sri}}</md-option>
+					</md-select>
+				</md-input-container>
+				</div>
+			  </div>
+			  <div class="section">
+				  <div class="row">
+					<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+					  <label>Start Mile Post</label>
+					  <input required="" name="sld_mp_st" step="any" type="number" ng-model="realData.sld_mp_st">
+					  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+					  <md-tooltip md-direction="right" style="font-size: 14px;">
+						 The start milepost for the selected SRI
+					  </md-tooltip>
+					  <div ng-messages="realForm.sld_mp_st.$error" multiple="" ng-if="realForm.sld_mp_st.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+					  </div>
+					</md-input-container>
+				  </div>
+				  <div class="row">
+					<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+					  <label>End Mile Post</label>
+					  <input required="" name="sld_mp_end" step="any" type="number" ng-model="realData.sld_mp_end">
+ 					  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+					  <md-tooltip md-direction="right" style="font-size: 14px;">
+						 OMB Circular A-4 recommends using both 3% and 7% real rates.
+					  </md-tooltip>
+					  <div ng-messages="realForm.sld_mp_end.$error" multiple="" ng-if="realForm.sld_mp_end.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+					  </div>
+					</md-input-container>
+				  </div>
+				  <div class="row">
+					<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+					  <label>Analysis Period</label>
+					  <input value="30" required="" name="analysis" step="any" type="number" ng-model="realData.analysis">
+					  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+					  <md-tooltip md-direction="right" style="font-size: 14px;">
+						 The analysis period is the period of time during which the initial and any future costs for the project alternatives will be evaluated
+					  </md-tooltip>
+					  <div ng-messages="realForm.analysis.$error" multiple="" ng-if="realForm.analysis.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+					  </div>
+					</md-input-container>
+				  </div>
+				  <div ng-switch on="typeOfApproach.type">
+					  <div ng-switch-when="Probabilistic" class="row">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Discount rate</label>
+						  <md-select required="" ng-model="typeOfDis" ng-change="showTypeOfDistribution($event,typeOfDis)">
+							  <md-option ng-repeat="dis in typeOfDistribution" value="{{dis.name}}">
+								{{dis.name}}
+							  </md-option>
+						  </md-select>
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="right" style="font-size: 14px;">
+							 OMB Circular A-4 recommends using both 3% and 7% real rates.
+						  </md-tooltip>
+						</md-input-container>
+						<br><br>
+					   </div>
+					   <div ng-switch-when="Deterministic" class="row">
+						<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+						  <label>Discount rate</label>
+						  <input required="" name="disc_rate" step="any" type="number" ng-model="realData.disc_rate" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+						  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+						  <md-tooltip md-direction="right" style="font-size: 14px;">
+							 OMB Circular A-4 recommends using both 3% and 7% real rates.
+						  </md-tooltip>
+						  <div ng-messages="realForm.disc_rate.$error" multiple="" ng-if="realForm.disc_rate.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+							<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+						  </div>
+						</md-input-container>
+						</div>
+				  </div>
+				  <div class="row">
+					<md-input-container class="md-icon-float md-block" flex-gt-sm="">
+					  <label>Truck Percentage</label>
+					  <input value="91.06" required="" name="truck" step="any" type="number" ng-model="realData.truck">
+					  <md-icon><i class="material-icons">info_outline</i></md-icon> 
+					  <md-tooltip md-direction="right" style="font-size: 14px;">
+						 OMB Circular A-4 recommends using both 3% and 7% real rates.
+					  </md-tooltip>
+					  <div ng-messages="realForm.truck.$error" multiple="" ng-if="realForm.truck.$dirty">
+							<div ng-message="required" style="text-align:left;">This field is required.</div>
+					  </div>
+					</md-input-container>
+				  </div>
+				  <div ng-switch on="typeOfApproach.type">
+					  <div ng-switch-when="Probabilistic" class="row">
+						<!-- ui-sref to direct to the next page - lcca.html -->
+						<a ui-sref="home.real.lcca" class="white-text" ng-click="setRealData(realData.analysis,typeOfDis,realData.truck)"><md-button ng-disabled="realForm.$invalid" class="md-primary md-raised">Continue</md-button></a>
+					  </div>
+					  <div ng-switch-when="Deterministic" class="row">
+						<!-- ui-sref to direct to the next page - lcca.html -->
+						<a ui-sref="home.real.lcca" class="white-text" ng-click="setRealData(realData.analysis,realData.disc_rate,realData.truck)"><md-button ng-disabled="realForm.$invalid" class="md-primary md-raised">Continue</md-button></a>
+					  </div>
+				  </div>
+				  <div class="row">
+				    <!-- ui-sref to direct to the next page - lcca.html -->
+					
+				  </div>
+			  </div>
+			</form>
+			<div class="col s6">
+				<div id="map_canvas"></div>
+			</div>
+			<script type="text/ng-template" id="tabDialog.disc_rate.html">
+			  <md-dialog layout-padding="">
+				<form name="realForm">
+				<div ng-switch on="typeOfDis">
+				 <div ng-switch-when="Fixed">
+				   <md-dialog-content>
+					<h4>Enter the discount rate</h4>
+					<md-input-container name="" class="md-block" flex-gt-sm="">
+					  <label>Discount rate</label>
+					  <input required="" name="disc_rateFix" step="any" type="number" ng-model="dialogData.disc_rateFix" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+					  <div ng-messages="realForm.disc_rateFix.$error" multiple="" ng-if="realForm.disc_rateFix.$dirty">
+						<div ng-message="required" style="text-align:left;">This field is required.</div>
+						<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+					  </div>
+					</md-input-container>
+				   </md-dialog-content>
+				 </div>
+				 <div ng-switch-when="Normal">
+				   <md-dialog-content>
+					<h4>Enter the discount rate</h4>
+					<md-input-container name="normal" class="md-block" flex-gt-sm="">
+					  <label>Mean</label>
+					  <input required="" name="disc_rateMean" step="any" type="number" ng-model="dialogData.disc_rateMean" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+					  <div ng-messages="realForm.disc_rateMean.$error" multiple="" ng-if="realForm.disc_rateMean.$dirty">
+						<div ng-message="required" style="text-align:left;">This field is required.</div>
+						<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+					  </div>
+					</md-input-container>
+					<md-input-container name="normal" class="md-block" flex-gt-sm="">
+					  <label>Standard Deviation</label>
+					  <input required="" name="disc_rateStd" step="any" type="number" ng-model="dialogData.disc_rateStd" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+					  <div ng-messages="realForm.disc_rateStd.$error" multiple="" ng-if="realForm.disc_rateStd.$dirty">
+						<div ng-message="required" style="text-align:left;">This field is required.</div>
+						<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+					  </div>
+					</md-input-container>
+				   </md-dialog-content>
+				 </div>
+				 <div ng-switch-when="Triangular">
+				   <md-dialog-content>
+					<h4>Enter the discount rate</h4>
+					<md-input-container name="Triangular" class="md-block" flex-gt-sm="">
+					  <label>Minimum</label>
+					  <input required="" name="disc_rateMin" step="any" type="number" ng-model="dialogData.disc_rateMin" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+					  <div ng-messages="realForm.disc_rateMin.$error" multiple="" ng-if="realForm.disc_rateMin.$dirty">
+						<div ng-message="required" style="text-align:left;">This field is required.</div>
+						<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+					  </div>
+					</md-input-container>
+					<md-input-container name="normal" class="md-block" flex-gt-sm="">
+					  <label>Most Likely</label>
+					  <input required="" name="disc_rateMsl" step="any" type="number" ng-model="dialogData.disc_rateMsl" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+					  <div ng-messages="realForm.disc_rateMsl.$error" multiple="" ng-if="realForm.disc_rateMsl.$dirty">
+						<div ng-message="required" style="text-align:left;">This field is required.</div>
+						<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+					  </div>
+					</md-input-container>
+					<md-input-container name="normal" class="md-block" flex-gt-sm="">
+					  <label>Maximum</label>
+					  <input required="" name="disc_rateMax" step="any" type="number" ng-model="dialogData.disc_rateMax" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/">
+					  <div ng-messages="realForm.disc_rateMax.$error" multiple="" ng-if="realForm.disc_rateMax.$dirty">
+						<div ng-message="required" style="text-align:left;">This field is required.</div>
+						<div ng-message="pattern" style="text-align:left;">Should be a number and can have two decimal digits" </div>
+					  </div>
+					</md-input-container>
+				   </md-dialog-content>
+				 </div>
+				</div>
+					<md-dialog-actions layout="row">
+						<md-button ng-disabled="realForm.$invalid" ng-click="answer()">
+						   Okay
+						</md-button>
+					</md-dialog-actions>
+				</form>
+			  </md-dialog>
+			</script>
+		</div>
+	</div>

@@ -1,0 +1,407 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+.inputdemoBasicUsage .md-datepicker-button {
+  width: 36px; }
+
+#map_canvas {
+  height:800px; 
+    width:900px; 
+}
+
+
+.tabsdemoDynamicTabs md-content {
+  background-color: transparent !important; }
+  .tabsdemoDynamicTabs md-content md-tabs {
+    border: 1px solid #e1e1e1; }
+    .tabsdemoDynamicTabs md-content md-tabs md-tab-content {
+      background: #f6f6f6; }
+    .tabsdemoDynamicTabs md-content md-tabs md-tabs-wrapper {
+      background: white; }
+  .tabsdemoDynamicTabs md-content h1:first-child {
+    margin-top: 0; }
+
+.tabsdemoDynamicTabs md-input-container {
+  padding-bottom: 0; }
+
+.tabsdemoDynamicTabs .remove-tab {
+  margin-bottom: 40px; }
+
+.tabsdemoDynamicTabs .demo-tab > div > div {
+  padding: 25px;
+  box-sizing: border-box; }
+
+.tabsdemoDynamicTabs .edit-form input {
+  width: 100%; }
+
+.tabsdemoDynamicTabs md-tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+
+.tabsdemoDynamicTabs md-tab[disabled] {
+  opacity: 0.5; }
+
+.tabsdemoDynamicTabs label {
+  text-align: left; }
+
+.tabsdemoDynamicTabs .long > input {
+  width: 264px; }
+
+.tabsdemoDynamicTabs .md-button.add-tab {
+  transform: translateY(5px); }
+  
+  .inputdemoIcons {
+  /*
+.right-icon {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  left: auto;
+  margin-top: 0;
+}
+*/ }
+  .inputdemoIcons .inputIconDemo {
+    min-height: 48px; }
+  .inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.email {
+    color: green; }
+  .inputdemoIcons md-input-container:not(.md-input-invalid) > md-icon.name {
+    color: dodgerblue; }
+  .inputdemoIcons md-input-container.md-input-invalid > md-icon.email,
+  .inputdemoIcons md-input-container.md-input-invalid > md-icon.name {
+    color: red; }
+	
+	md-tooltip {
+  position: absolute;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 18px; }
+	
+	
+	
+	.divider {
+    height:50px;
+}
+
+sectionBootstrap {
+    height:500px;
+    padding-top:50px;
+    padding-bottom:50px;
+    overflow:auto;
+}
+
+.bg-1 {
+	background: url('./img/background1.jpg') no-repeat center center fixed;
+    color:#fff;
+    background-size:cover;
+}
+  
+.bg-2 {
+	background: url('./img/background2.jpg') no-repeat top center fixed;
+    color:#fff;
+    background-size:cover;
+}
+
+.bg-3 {
+	background: url('./img/background4.jpg') no-repeat bottom center fixed;
+    color:#fff;
+    background-size:cover;
+}
+
+#footer {
+    height: 60px;
+    background-color:#585858;
+    margin-top:50px;
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+#footer a {
+  color:#efefef;
+}
+
+.md-input-has-value.bigClass > input {
+    font-size: 30px;
+}
+
+label          {
+  font-size:18px;  
+}
+
+.listdemoBasicUsage md-divider {
+  margin-top: 10px;
+  margin-bottom: 0; }
+
+  
+ 
+.templateRoot{
+    display: inline-block;
+}
+.hover-edit-trigger {
+    padding: 3px;
+}
+.hover-edit-trigger:hover{
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+}
+.edit-pencil{
+    display: none;
+    margin-left: 3px;
+    padding: 3px;
+    border-left: 1px solid #dcdcdc;
+}
+.hover-text-field:hover .edit-pencil{
+    display: inline-block;
+}
+.edit-button-group{
+    border: 1px solid #dcdcdc;
+    border-top: none;
+    border-radius: 4px;
+    padding: 0px 3px 0px 3px;
+}
+.edit-button-group .glyphicon{
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.toolbarTheme {
+  background-color: #34495E
+}
+
+.md-accordion .expandCollapse { width:30px; height:30px; position:relative; font-size:20px; font-weight:bold; cursor:pointer; color:#fff; display:block; margin-top: -2px; margin-left: -2px; overflow:hidden; } 
+.md-accordion .expandCollapse:active { border:0px; }
+.md-accordion .expandCollapse:before, .md-accordion .expandCollapse:after { width:30px; height:30px; display:block; position:absolute; top:0; left:0; line-height:32px; text-align:center; -webkit-transition: .3s all ease-out; transition: .3s all ease-out; }
+.md-accordion .expandCollapse:before { opacity:1 -webkit-transform: rotate(0deg); transform: rotate(0deg); content: "|"; margin-top:-3px; }
+.md-accordion .expandCollapse:after { opacity:1; -webkit-transform: rotate(-90deg); transform: rotate(-90deg); content: "|"; margin-left:-3px; }
+.md-accordion .active:before { opacity:1; -webkit-transform: rotate(90deg); transform: rotate(90deg); margin-left:3px; margin-top:0px; }
+.md-accordion .dataContent { background: #F2F2F2; height:0px; overflow:hidden; -webkit-transition: .3s all ease-out; transition: .3s all ease-out; }
+.md-accordion .activeContent { height:30vh; padding:0; display:block; }
+.md-accordion md-toolbar{ cursor:pointer; border-bottom:1px solid rgb(63,107,181) }
+
+
+.checkboxdemoBasicUsage div.flex-xs {
+  min-height: 40px; }
+
+.checkboxdemoBasicUsage .checkboxDemo1 div {
+  clear: both; }
+
+.checkboxdemoBasicUsage p {
+  padding-left: 8px; }
+
+.checkboxdemoBasicUsage fieldset.standard {
+  border-style: solid;
+  border-width: 1px; }
+
+.checkboxdemoBasicUsage legend {
+  color: #3F51B5; }
+
+.checkboxdemoBasicUsage legend code {
+  color: #3F51B5;
+  font-weight: normal; }
+
+.checkboxdemoBasicUsage .ipsum {
+  color: saddlebrown; }
+
+/*.outputSummary {
+	background: url(../img/background2.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+/*.inputSummary {
+	background: url(../img/background6.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}*/
+
+.hypothetical2 {
+	background: url(../img/background7.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.headerLogo img {
+  float: left;
+  width: 80px;
+  height: 70px;
+  background: #555;
+}
+
+li.nostyle {
+    list-style-type: none;
+}
+
+
+.breadcrumb { 
+			list-style: none; 
+			overflow: hidden; 
+			font: 18px Helvetica, Arial, Sans-Serif;
+		}
+		.breadcrumb li { 
+			float: left; 
+		}
+		.breadcrumb li a {
+			color: white;
+			text-decoration: none; 
+			padding: 10px 0 10px 55px;
+			background: brown;                   /* fallback color */
+			background: hsla(34,85%,35%,1); 
+			position: relative; 
+			display: block;
+			float: left;
+		}
+		.breadcrumb li a:after { 
+			content: " "; 
+			display: block; 
+			width: 0; 
+			height: 0;
+			border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+			border-bottom: 50px solid transparent;
+			border-left: 30px solid hsla(34,85%,35%,1);
+			position: absolute;
+			top: 50%;
+			margin-top: -50px; 
+			left: 100%;
+			z-index: 2; 
+		}	
+		.breadcrumb li a:before { 
+			content: " "; 
+			display: block; 
+			width: 0; 
+			height: 0;
+			border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+			border-bottom: 50px solid transparent;
+			border-left: 30px solid white;
+			position: absolute;
+			top: 50%;
+			margin-top: -50px; 
+			margin-left: 1px;
+			left: 100%;
+			z-index: 1; 
+		}	
+		.breadcrumb li:first-child a {
+			padding-left: 10px;
+		}
+		.breadcrumb li:nth-child(2) a       { background:        hsla(34,85%,45%,1); }
+		.breadcrumb li:nth-child(2) a:after { border-left-color: hsla(34,85%,45%,1); }
+		.breadcrumb li:nth-child(3) a       { background:        hsla(34,85%,55%,1); }
+		.breadcrumb li:nth-child(3) a:after { border-left-color: hsla(34,85%,55%,1); }
+		.breadcrumb li:nth-child(4) a       { background:        hsla(34,85%,65%,1); }
+		.breadcrumb li:nth-child(4) a:after { border-left-color: hsla(34,85%,65%,1); }
+		.breadcrumb li:nth-child(5) a       { background:        hsla(34,85%,75%,1); }
+		.breadcrumb li:nth-child(5) a:after { border-left-color: hsla(34,85%,75%,1); }
+		/*.breadcrumb li:last-child a {
+			
+		}*/
+		.breadcrumb li:last-child a:after { border: 0; }
+		.breadcrumb li a:hover { background: hsla(34,85%,25%,1); }
+		.breadcrumb li a:hover:after { border-left-color: hsla(34,85%,25%,1) !important; }
+
+		.lastBreadCrumb {
+			font-style: bold;
+			font-size: 20px;
+			font-family: Verdana, Times, serif;
+			line-height: 38px;
+			color: black;
+			pointer-events: none;
+ 			cursor: default;
+			padding-left: 40px;
+			padding-bottom: 30px;
+		}
+		
+		.fillCrumb {
+			background-color: lightblue;
+		}
+		
+		.dialogdemoBasicUsage #popupContainer {
+  position: relative; }
+
+.dialogdemoBasicUsage .footer {
+  width: 100%;
+  text-align: center;
+  margin-left: 20px; }
+
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+  font-size: 0.8em;
+  margin-top: 50px; }
+
+.dialogdemoBasicUsage button {
+  width: 200px; }
+
+.dialogdemoBasicUsage div#status {
+  color: #c60008; }
+
+.dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
+  margin-bottom: 0; }
+
+
+.cardLarge {
+	height:800px;
+}
+/*
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+*/
+/*
+
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+*/

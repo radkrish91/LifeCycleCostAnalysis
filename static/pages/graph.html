@@ -1,0 +1,265 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script> 
+<!-- Angular Material Library -->
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+<script type="text/javascript">
+
+angular.module('summaryApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+
+.controller('opSummaryCtrl',  ['$scope', function ($scope) {
+	$scope.data = {};
+  $scope.data.cb1 = true;
+  $scope.data.cb2 = false;
+  $scope.data.cb3 = false;
+  $scope.data.cb4 = false;
+  $scope.data.cb5 = false;
+}])
+
+.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+  $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+  $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+  $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+});
+;
+
+</script>
+
+
+<body ng-app="summaryApp">
+
+<div ng-controller="opSummaryCtrl" class="md-padding outputSummary">
+  <div class="container">
+      <md-card class="z-depth-2">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Agency Cost</span>
+            <span class="md-subhead">Costs incurred by government agencies all through the value chain. Usually includes material cost, labor cost, equipment cost, construction activity schedules, and construction equipment used.</span>
+          </md-card-title-text>
+        </md-card-title>
+		
+		<md-card-content>
+		<md-divider></md-divider>
+			<table class="centered highlight bordered">
+				<thead>
+				  <tr>
+					  <th data-field="id">Name Of Sub Cost</th>
+					  <th data-field="name">Alternative A</th>
+					  <th data-field="price">Alternative B</th>
+				  </tr>
+				</thead>
+				
+				<tbody>
+				  <tr>
+					<td>Initial Construction Cost</td>
+					<td>4,546,198</td>
+					<td>4,718,952</td>
+				  </tr>
+				  <tr>
+					<td>Maintenance Cost</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <tr>
+					<td>Rehabilitation Cost</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <tr>
+					<td>Salvage Value</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <tr>
+					<td>Total Agency Cost</td>
+					<td>24,546,198</td>
+					<td>34,546,198</td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td><ng-md-icon icon="done" style="fill: green" size="56"></ng-md-icon> </td>
+					<td></td>
+				  </tr>
+				</tbody>
+			</table>
+			<md-divider></md-divider>
+			<md-card-actions layout="row" layout-align="end center">
+			  <span class="md-subhead">Recommended Alternative - </span>
+			  <code style="display: block; padding: 8px; color: #3F51B5; font-weight: normal;">Alternative A</code>
+			</md-card-actions>
+			
+		</md-card-content>
+		
+      </md-card>
+	  <md-card class="z-depth-2">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">User Cost</span>
+            <span class="md-subhead">Expenses incurred by those using the system. Input may includes traffic flow rate (e.g. 35000 cars/day/direction), road capacity, work zone speed limits, lane width, and lane closure.</span>
+          </md-card-title-text>
+        </md-card-title>
+		
+		<md-card-content>
+		<md-divider></md-divider>
+			<table class="centered highlight bordered">
+				<thead>
+				  <tr>
+					  <th data-field="id">Name Of Sub Cost</th>
+					  <th data-field="name">Alternative A</th>
+					  <th data-field="price">Alternative B</th>
+				  </tr>
+				</thead>
+				
+				<tbody>
+				  <tr>
+					<td>Traffic Delay Cost</td>
+					<td>4,546,198</td>
+					<td>4,718,952</td>
+				  </tr>
+				  <tr>
+					<td>Vehicle Operation Cost</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <tr>
+					<td>Crash Risk Cost</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <tr>
+					<td>Total User Cost</td>
+					<td>24,546,198</td>
+					<td>34,546,198</td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td></td>
+					<td><ng-md-icon icon="done" style="fill: green" size="56"></ng-md-icon></td>
+				  </tr>
+				</tbody>
+			</table>
+			<md-divider></md-divider>
+			<md-card-actions layout="row" layout-align="end center">
+			  <span class="md-subhead">Recommended Alternative - </span>
+			  <code style="display: block; padding: 8px; color: #3F51B5; font-weight: normal;">Alternative A</code>
+			</md-card-actions>
+			
+		</md-card-content>
+		
+      </md-card>
+	  <md-card class="z-depth-2">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Social Cost</span>
+            <span class="md-subhead">External cost of infrastructure construction, usually includes Air Pollution Cost, Noise and Energy Consumption Cost</span>
+          </md-card-title-text>
+        </md-card-title>
+		
+		<md-card-content>
+		<md-divider></md-divider>
+			<table class="centered highlight bordered">
+				<thead>
+				  <tr>
+					  <th data-field="id">Name Of Sub Cost</th>
+					  <th data-field="name">Alternative A</th>
+					  <th data-field="price">Alternative B</th>
+				  </tr>
+				</thead>
+				
+				<tbody>
+				  <tr>
+					<td>Air Pollution Cost</td>
+					<td>4,546,198</td>
+					<td>4,718,952</td>
+				  </tr>
+				  <tr>
+					<td>Noise Cost</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <tr>
+					<td>Energy Consumption Cost</td>
+					<td>4,546,198</td>
+					<td>4,546,198</td>
+				  </tr>
+				  <md-divider></md-divider>
+				  <tr>
+					<td>Total Social Cost</td>
+					<td>24,546,198</td>
+					<td>34,546,198</td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td></td>
+					<td><ng-md-icon icon="done" style="fill: green" size="56"></ng-md-icon></td>
+				  </tr>
+				</tbody>
+			</table>
+			<md-divider></md-divider>
+			<md-card-actions layout="row" layout-align="end center">
+			  <span class="md-subhead">Recommended Alternative - </span>
+			  <code style="display: block; padding: 8px; color: #3F51B5; font-weight: normal;">Alternative A</code>
+			</md-card-actions>
+		</md-card-content>
+      </md-card>
+	  
+	  <md-card class="z-depth-5">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Life Cycle Cost</span>
+          </md-card-title-text>
+        </md-card-title>
+		
+		<md-card-content>
+		<md-divider></md-divider>
+			<table class="centered highlight bordered">
+				<thead>
+				  <tr>
+					  <th>Alternative A</th>
+					  <th>Alternative B</th>
+				  </tr>
+				</thead>
+				
+				<tbody>
+				  <tr>
+					<td>94,546,198</td>
+					<td>124,718,952</td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td><ng-md-icon icon="done_all" style="fill: green" size="56"></ng-md-icon></td>
+				  </tr>
+				</tbody>
+			</table>
+			<md-divider></md-divider>
+			<br>
+			<md-card-actions layout="row" layout-align="end center">
+			  <span class="md-subhead">Recommended Alternative - </span>
+			  <code style="display: block; padding: 8px; color: #3F51B5; font-weight: normal;">Alternative B</code>
+			</md-card-actions>
+		</md-card-content>
+      </md-card>
+	  <br><br>
+	  <div class="row" id="outputButtons">
+		<div align="center">
+			<a class="waves-effect z-depth-2 waves-light btn white-text" href="/static/reports/DeterministicResults.xlsx" download>Generate Report</a>
+		</div>
+	  </div>
+  </div>
+</div>
+
+</body>
+</html>

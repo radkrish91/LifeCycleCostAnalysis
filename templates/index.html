@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Life Cycle Cost Analysis</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="./static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="./static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+</head>
+
+<body ng-app="lccaApp" ng-controller="mainController">
+
+  <!-- Navigation bar -->
+  <nav class="white" role="navigation" style="height:70px">
+    <div class="nav-wrapper container headerLogo"><a id="logo-container" ui-sref="home" class="brand-logo"><img src="./static/img/citysmartlogo.png" alt="logo" ui-sref="home"/>Life Cycle Cost Analysis</a>
+      <ul class="right hide-on-med-and-down">
+		<li><a class="dropdown-button teal-text" data-activates="dropdown1">Start a scenario<i class="material-icons right">arrow_drop_down</i></a></li>
+		<ul id="dropdown1" class="dropdown-content">
+		  <li><a ng-click="checkProbOrDetHypo($event)">Hypothetical Scenario</a></li>
+		  <li><a ng-click="checkProbOrDetReal($event)">Real Infrastructure in NJ</a></li>
+		</ul>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+		<li><a href="hypothetical">Project Information</a></li>
+		<li><a href="real">Life Cycle Cost Analysis</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  
+   <!-- Breadcrumbs -->
+    <script type="text/ng-template" id="tabDialog.checkProbOrDet.html">
+	  <md-dialog layout-padding="">
+		<form name="lccaForm">
+		   <md-dialog-content>
+			<h4>Enter the type of approach</h4>
+			<md-input-container class="md-block" flex-gt-sm="">
+			  <md-radio-group required="" ng-model="choose.type">
+				  <md-radio-button value="Deterministic" class="md-primary">Deterministic</md-radio-button>
+				  <md-radio-button value="Probabilistic" class="md-primary">Probabilistic</md-radio-button>
+  			  </md-radio-group>
+			</md-input-container>
+		   </md-dialog-content>
+			<md-dialog-actions layout="row">
+				<md-button ng-disabled="lccaForm.$invalid" ng-click="answer(choose.type)">
+				   Okay
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	  </md-dialog>
+  </script>
+   
+   <!-- Angular UI view routing. Refer to mainScript.js file. Initial state is "home". From there the app undergoes lot of state transitions and each state has a dedicated controller -->
+   <div id="main">
+		<div ui-view="main"></div>
+   </div>
+
+   <!-- Footer bar -->
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About</h5>
+          <p class="grey-text text-lighten-4">LCCA is one of the most recognized economic evaluation and decision making techniques that can be performed to find optimum strategies of any maintenance and rehabilitation project that take into consideration the life cycle cost of the entire project. This web-based user friendly tool will incorporate a flexible interface to perform LCCA methodology for different scenarios and can access state-wide infrastructure data. </p>
+
+        </div>
+        <div class="col l4 s12">
+          <h5 class="white-text tex-darken-3">Contact Us</h5>
+          <p class="grey-text text-lighten-4">Department of Civil and Urban Engineering <br>
+			Center for Urban Science & Progress (CUSP) <br>
+			Tandon School of Engineering <br>
+			New York University <br>
+			One Metrotech Center, 19 Floor <br>
+			Brooklyn, NY, 11201 </p>
+        </div>
+        <div class="col l2 s12">
+          <h5 class="white-text">Quick Links</h5>
+          <ul>
+            <li><a class="white-text" href="https://recast.mst.edu/" target="_blank">RE-CAST PROJECT</a></li>
+            <li><a class="white-text" href="http://engineering.nyu.edu/citysmart/" target="_blank">NYU CITY SMART LAB</a></li>
+            <li><a class="white-text" href="http://www.nyu.edu/" target="_blank">NEW YORK UNIVERSITY</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  
+  <script src="//code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClnbUZXeokQzVFGxoVEo1WfmMh0Sbfg-8"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.3/angular-sanitize.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script> 
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js" type="text/javascript"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+
+  <!-- Scripts from the server -->
+  <script src="./static/js/uiBreadcrumbs.js" type="text/javascript"></script>
+  <script src="./static/js/mainScript.js" type="text/javascript"></script>
+  <script src="./static/js/controller.js" type="text/javascript"></script>
+  <script src="./static/js/materialize.js" type="text/javascript"></script>
+  <script src="./static/js/init.js" type="text/javascript"></script>
+  <script src="./static/js/myScript.js" type="text/javascript"></script>
+  <script src="./static/js/chartService.js" type="text/javascript"></script>
+  
+  </body>
+</html>

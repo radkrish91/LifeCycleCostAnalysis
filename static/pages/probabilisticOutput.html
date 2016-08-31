@@ -1,0 +1,227 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script> 
+<!-- Angular Material Library -->
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+<script type="text/javascript">
+
+angular.module('probabilisticApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+
+.controller('probabilisticCtrl',  ['$scope', function ($scope) {
+	$scope.data = {};
+  $scope.data.cb1 = true;
+  $scope.data.cb2 = false;
+  $scope.data.cb3 = false;
+  $scope.data.cb4 = false;
+  $scope.data.cb5 = false;
+}])
+
+.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark();
+  $mdThemingProvider.theme('dark-orange').backgroundPalette('orange').dark();
+  $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
+  $mdThemingProvider.theme('dark-blue').backgroundPalette('blue').dark();
+});
+;
+
+</script>
+
+
+<body ng-app="probabilisticApp">
+
+<div ng-controller="probabilisticCtrl" class="md-padding outputSummary">
+  <div class="container">
+	
+	    <md-card>
+			<div id="banner" style="height:350px;">
+				<img ng-src="../img/Agency_cost.png" class="md-card-image" alt="Washed Out">
+			</div>
+			<md-card-title>
+			  <md-card-title-text>
+				<span class="md-headline">Agency Cost</span>
+				<span class="md-subhead">Costs incurred by government agencies all through the value chain. Usually includes material cost, labor cost, equipment cost, construction activity schedules, and construction equipment used.</span>
+			  </md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+			  <table class="centered responsive-table">
+					<thead>
+					  <tr colspan="5">
+						  <th rowspan="2">Name Of Sub Cost</th>
+						  <th colspan="2">Alternative A</th>
+						  <th colspan="2">Alternative B</th>
+					  </tr>
+					  <tr>
+						   <th>Mean</th>
+						   <th>STD</th>
+						   <th>Mean</th>
+						   <th>STD</th>
+					  </tr>
+					</thead>
+					
+					<tbody>
+					  <tr>
+						<td>Initial Construction Cost</td>
+						<td>4,546,198.0987</td>
+						<td>4,718,952.0989</td>
+						<td>4,546,198.0987</td>
+						<td>4,718,952.0989</td>
+					  </tr>
+					  <tr>
+						<td>Maintenance Cost</td>
+						<td>4,546,198.09872</td>
+						<td>4,546,198.12923</td>
+						<td>4,546,198.0987</td>
+						<td>4,718,952.0989</td>
+					  </tr>
+					  <tr>
+						<td>Rehabilitation Cost</td>
+						<td>4,546,198.37839</td>
+						<td>4,546,198.3873</td>
+						<td>4,546,198.0987</td>
+						<td>4,718,952.0989</td>
+					  </tr>
+					  <tr>
+						<td>Salvage Value</td>
+						<td>4,546,198.13983</td>
+						<td>4,546,198.3983</td>
+						<td>4,546,198.0987</td>
+						<td>4,718,952.0989</td>
+					  </tr>
+					  <tr>
+						<td>Total Agency Cost</td>
+						<td>24,546,198.1234</td>
+						<td>34,546,198.1219</td>
+						<td>4,546,198.0987</td>
+						<td>4,718,952.0989</td>
+					  </tr>
+					  <tr>
+						<td></td>
+						<td colspan="2"><ng-md-icon icon="done" style="fill: green" size="56"></ng-md-icon> </td>
+						<td></td>
+						<td></td>
+					  </tr>
+					</tbody>
+			  </table>
+			</md-card-content>
+		</md-card>
+	  
+	  <br><br>
+	  
+	  <md-card>
+		<div id="banner" style="height:350px;">
+			<img ng-src="../img/User_Cost.png" class="md-card-image" alt="Washed Out">
+		</div>
+		<md-card-title>
+		  <md-card-title-text>
+			<span class="md-headline">User Cost</span>
+			<span class="md-subhead">Expenses incurred by those using the system. Input may includes traffic flow rate (e.g. 35000 cars/day/direction), road capacity, work zone speed limits, lane width, and lane closure.</span>
+		  </md-card-title-text>
+		</md-card-title>
+
+		<md-card-content>
+		  <table class="centered responsive-table">
+				<thead>
+				  <tr colspan="5">
+					  <th rowspan="2">&nbsp;</th>
+					  <th colspan="2">Alternative A</th>
+					  <th colspan="2">Alternative B</th>
+				  </tr>
+				  <tr>
+					   <th>Mean</th>
+					   <th>SD</th>
+					   <th>Mean</th>
+					   <th>SD</th>
+				  </tr>
+				</thead>
+				
+				<tbody>
+				  <tr>
+					<td>Total User Cost</td>
+					<td>24,546,198.1234</td>
+					<td>34,546,198.1219</td>
+					<td>4,546,198.0987</td>
+					<td>4,718,952.0989</td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2"><ng-md-icon icon="done" style="fill: green" size="56"></ng-md-icon> </td>
+				  </tr>
+				</tbody>
+		  </table>
+		</md-card-content>
+	  </md-card>
+	
+	  <br><br>
+	  
+	  <md-card>
+		<div id="banner" style="height:350px;">
+			<img ng-src="../img/Social_Cost.png" class="md-card-image" alt="Washed Out">
+		</div>
+		<md-card-title>
+		  <md-card-title-text>
+			<span class="md-headline">Social Cost</span>
+			<span class="md-subhead">External cost of infrastructure construction, usually includes Air Pollution Cost, Noise and Energy Consumption Cost.</span>
+		  </md-card-title-text>
+		</md-card-title>
+		
+		<md-card-content>
+		  <table class="centered responsive-table">
+				<thead>
+				  <tr colspan="5">
+					  <th rowspan="2">&nbsp;</th>
+					  <th colspan="2">Alternative A</th>
+					  <th colspan="2">Alternative B</th>
+				  </tr>
+				  <tr>
+					   <th>Mean</th>
+					   <th>SD</th>
+					   <th>Mean</th>
+					   <th>SD</th>
+				  </tr>
+				</thead>
+				
+				<tbody>
+				  <tr>
+					<td>Total Social Cost</td>
+					<td>24,546,198.1234</td>
+					<td>34,546,198.1219</td>
+					<td>4,546,198.0987</td>
+					<td>4,718,952.0989</td>
+				  </tr>
+				  <tr>
+					<td></td>
+					<td colspan="2"><ng-md-icon icon="done" style="fill: green" size="56"></ng-md-icon> </td>
+					<td></td>
+					<td></td>
+				  </tr>
+				</tbody>
+		  </table>
+		</md-card-content>
+	  </md-card>
+	
+	<br><br>
+	
+	<div class="row" id="outputButtons">
+		<div align="center">
+			<a class="waves-effect z-depth-2 waves-light btn white-text" href="/static/reports/Results.xlsx" download>Generate Report</a>
+		</div>
+	</div>
+	  
+  </div>
+</div>	
+</body>
+</html>
